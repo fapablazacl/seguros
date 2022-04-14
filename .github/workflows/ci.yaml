@@ -9,6 +9,7 @@ jobs:
           npm -v
           node -v
           docker -v
+          ls -la
       - name: Instalacion Dependencias
         run: |
           cd api-cotizaciones
