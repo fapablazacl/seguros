@@ -9,7 +9,8 @@ jobs:
           npm -v
           node -v
           docker -v
-          ls -la
+      - name: Descarga del Repositorio
+        uses: actions/checkout@v3
       - name: Instalacion Dependencias
         run: |
           cd api-cotizaciones
