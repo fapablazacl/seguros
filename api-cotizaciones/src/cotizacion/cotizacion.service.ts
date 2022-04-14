@@ -10,7 +10,7 @@ export class CotizacionService {
    * @param cliente
    * @returns
    */
-  generate(cliente: Cliente): Cotizacion {
+  generar(cliente: Cliente): Cotizacion {
     const planes: Plan[] = [];
 
     return new Cotizacion(planes);
