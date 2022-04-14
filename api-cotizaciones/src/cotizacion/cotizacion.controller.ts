@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Param, ValidationPipe } from '@nestjs/common';
-import { QuotationService } from './quotation.service';
+import { CotizacionService } from './cotizacion.service';
 import { CreateCollaboratorDto } from './dto/create-collaborator.dto';
 
 @Controller('collaborators')
 export class CollaboratorsController {
-  constructor(private readonly collaboratorsService: QuotationService) {}
+  constructor(private readonly collaboratorsService: CotizacionService) {}
 
   @Post()
   create(@Body(new ValidationPipe()) createCollaboratorDto: CreateCollaboratorDto) {

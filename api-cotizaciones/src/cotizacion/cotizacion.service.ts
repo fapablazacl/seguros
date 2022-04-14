@@ -4,7 +4,7 @@ import { CreateCollaboratorDto } from './dto/create-collaborator.dto';
 import { Collaborator } from './interfaces/collaborator.interface';
 
 @Injectable()
-export class QuotationService {
+export class CotizacionService {
   
   generate(): any {
     return {};
