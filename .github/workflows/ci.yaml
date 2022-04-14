@@ -27,3 +27,9 @@ jobs:
         run: |
           cd api-cotizaciones
           npm run build
+  build-proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Listar Versiones
+        run: |
+          docker -v
