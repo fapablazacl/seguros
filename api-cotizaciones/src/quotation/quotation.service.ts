@@ -4,7 +4,12 @@ import { CreateCollaboratorDto } from './dto/create-collaborator.dto';
 import { Collaborator } from './interfaces/collaborator.interface';
 
 @Injectable()
-export class CollaboratorsService {
+export class QuotationService {
+  
+  generate(): any {
+    return {};
+  }
+
   create(createCollaboratorDto: CreateCollaboratorDto) {
     const collaborator: Collaborator = {
       identifierNumber: createCollaboratorDto.identifierNumber,
