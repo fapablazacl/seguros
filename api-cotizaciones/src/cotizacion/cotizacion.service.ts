@@ -1,68 +1,25 @@
-
 import { Injectable } from '@nestjs/common';
-import { CreateCollaboratorDto } from './dto/create-collaborator.dto';
-import { Collaborator } from './interfaces/collaborator.interface';
+import { Cliente } from './cliente';
+import { Cotizacion } from './cotizacion';
+import { Plan } from './plan';
 
 @Injectable()
 export class CotizacionService {
-  
-  generate(): any {
-    return {};
+  /**
+   * Genera una nueva Cotizacion de Planes de Seguros, en base al Cliente suministrado.
+   * @param cliente
+   * @returns
+   */
+  generate(cliente: Cliente): Cotizacion {
+    const planes: Plan[] = [];
+
+    return new Cotizacion(planes);
   }
 
-  create(createCollaboratorDto: CreateCollaboratorDto) {
-    const collaborator: Collaborator = {
-      identifierNumber: createCollaboratorDto.identifierNumber,
-      firstName: createCollaboratorDto.firstName,
-      lastName1:createCollaboratorDto.lastName1,
-      lastName2: createCollaboratorDto.lastName2,
-      personalEmail: createCollaboratorDto.personalEmail,
-      email: createCollaboratorDto.personalEmail,
-      birthDate: createCollaboratorDto.birthDate,
-      accounts: []
-    };
-
-    this.collaborators.push(collaborator);
-  }
-
-  findAll(): Collaborator[] {
-    return this.collaborators;
-  }
-
-  findOne(id: number) : Collaborator {
-    return this.collaborators.find( (collaborator: Collaborator) => {
-      collaborator.identifierNumber === id.toString();
-    });
-  }
-
-  private collaborators: Collaborator[] = [
-    {
-      identifierNumber: '1',
-      firstName: 'string',
-      lastName1: 'string',
-      lastName2: 'string',
-      email: 'string',
-      personalEmail: 'string',
-      birthDate: 'string',
-      accounts: []
-    }, {
-      identifierNumber: '2',
-      firstName: 'string',
-      lastName1: 'string',
-      lastName2: 'string',
-      email: 'string',
-      personalEmail: 'string',
-      birthDate: 'string',
-      accounts: []
-    }, {
-      identifierNumber: '3',
-      firstName: 'string',
-      lastName1: 'string',
-      lastName2: 'string',
-      email: 'string',
-      personalEmail: 'string',
-      birthDate: 'string',
-      accounts: []
-    }
+  // planes de ejemplo
+  private planes: Plan[] = [
+    new Plan('1', 'Plan 1', 'MetLife', 11755, 0.41, 500, '1', 2),
+    new Plan('2', 'Plan 2', 'MetLife', 23223, 0.81, 500, '1', 2),
+    new Plan('3', 'Plan 3', 'MetLife', 34978, 1.22, 500, '1', 2),
   ];
 }
