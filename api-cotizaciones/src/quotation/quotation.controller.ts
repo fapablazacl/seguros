@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Param, ValidationPipe } from '@nestjs/common';
-import { CollaboratorsService } from './collaborators.service';
+import { CollaboratorsService } from './quotation.service';
 import { CreateCollaboratorDto } from './dto/create-collaborator.dto';
 
 @Controller('collaborators')

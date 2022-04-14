@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CollaboratorsModule } from './collaborators/collaborators.module';
+import { CollaboratorsModule } from './quotation/quotation.module';
 
 @Module({
   imports: [CollaboratorsModule],
