@@ -13,7 +13,7 @@ export class CotizacionService {
   generar(cliente: Cliente): Cotizacion {
     const planes: Plan[] = [];
 
-    return new Cotizacion(planes);
+    return new Cotizacion(this.planes);
   }
 
   // planes de ejemplo

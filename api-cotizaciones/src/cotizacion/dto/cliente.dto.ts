@@ -4,12 +4,12 @@ export class ClienteDto {
   @IsString()
   public rut: string;
 
-  @IsDate()
+  @IsString()
   public fechaNacimiento: string;
 
-  @IsEmail()
+  @IsString()
   public correo: string;
 
-  @IsAlpha()
+  @IsString()
   public telefono: string;
 }
