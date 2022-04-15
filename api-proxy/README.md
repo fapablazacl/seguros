@@ -22,7 +22,7 @@ docker run --rm \
     kong kong migrations bootstrap
 
 
-### Inicializar Kong 
+## Inicializar Kong 
 docker run -d --name kong \
     --link kong-database:kong-database \
     -e "KONG_DATABASE=postgres" \
