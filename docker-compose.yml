@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  api-cotizaciones:
+    build: api-cotizaciones
+    ports:
+      - "3000:3000"
+  redis:
+    image: "redis:alpine"
