@@ -4,5 +4,9 @@ services:
     build: api-cotizaciones
     ports:
       - "3000:3000"
-  redis:
-    image: "redis:alpine"
+  api-proxy-db:
+    image: postgres:9.6
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
