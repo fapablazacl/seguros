@@ -4,6 +4,7 @@ import io.swagger.model.Cliente;
 import io.swagger.model.Cotizacion;
 import io.swagger.model.DetalleValidacion;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.model.Plan;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -31,8 +32,10 @@ import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2022-04-20T16:20:48.774Z[GMT]")
 @RestController
@@ -50,18 +53,45 @@ public class CotizacionApiController implements CotizacionApi {
         this.request = request;
     }
 
+    private final UUID plan1Id = UUID.randomUUID();
+    private final UUID plan2Id = UUID.randomUUID();
+    private final UUID plan3Id = UUID.randomUUID();
+
+    private Plan createMetLifePlan(UUID id, String nombre, int monto, float montoUf, float capitalAsegurado) {
+        Plan plan = new Plan();
+
+        plan
+                .id(id)
+                .aseguradora("MetLife")
+                .capitalAsegurado(BigDecimal.valueOf(capitalAsegurado))
+                .nombre(nombre)
+                .montoPesos(monto)
+                .montoUf(BigDecimal.valueOf(montoUf))
+                .promocionId(UUID.randomUUID())
+                .promocionValor(2);
+
+        return plan;
+    }
+
     public ResponseEntity<Cotizacion> generarCotizacion(@Parameter(in = ParameterIn.DEFAULT, description = "", required=true, schema=@Schema()) @Valid @RequestBody Cliente body) {
         String accept = request.getHeader("Accept");
+
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Cotizacion>(objectMapper.readValue("{\n  \"planes\" : [ {\n    \"promocionId\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n    \"promocionValor\" : 2,\n    \"capitalAsegurado\" : 500,\n    \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n    \"nombre\" : \"Plan 1\",\n    \"montoPesos\" : 11755,\n    \"montoUf\" : 0.41,\n    \"aseguradora\" : \"MetLife\"\n  }, {\n    \"promocionId\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n    \"promocionValor\" : 2,\n    \"capitalAsegurado\" : 500,\n    \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n    \"nombre\" : \"Plan 1\",\n    \"montoPesos\" : 11755,\n    \"montoUf\" : 0.41,\n    \"aseguradora\" : \"MetLife\"\n  } ],\n  \"id\" : \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n}", Cotizacion.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
+                Cotizacion cotizacion = new Cotizacion();
+
+                cotizacion.setId(UUID.randomUUID());
+                cotizacion.addPlanesItem(this.createMetLifePlan(this.plan1Id, "Plan 1", 11755, 0.41f, 500));
+                cotizacion.addPlanesItem(this.createMetLifePlan(this.plan2Id, "Plan 2", 23223, 0.81f, 1000));
+                cotizacion.addPlanesItem(this.createMetLifePlan(this.plan3Id, "Plan 3", 34978, 1.22f, 1500));
+
+                return new ResponseEntity<Cotizacion>(cotizacion, HttpStatus.CREATED);
+            } catch (Exception e) {
+                log.error("Error ocurred when performing Cotizacion", e);
                 return new ResponseEntity<Cotizacion>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
         return new ResponseEntity<Cotizacion>(HttpStatus.NOT_IMPLEMENTED);
     }
-
 }
