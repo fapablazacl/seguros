@@ -1,12 +1,36 @@
 version: "3.9"
+
+
+networks:
+  kong-net:
+    external: false
+
 services:
   api-cotizaciones:
     build: api-cotizaciones
+    networks:
+      - kong-net
     ports:
       - "3000:3000"
-  api-proxy-db:
+  kong-database:
+    container_name: kong-database
     image: postgres:9.6
+    networks:
+      - kong-net
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=mysecretpassword
+      POSTGRES_USER: kong
+      POSTGRES_DB: kong
+      POSTGRES_PASSWORD: kong
+  kong-migrations:
+    image: kong
+    networks:
+      - kong-net
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: kong
+    command: kong migrations bootstrap
+    restart: on-failure
