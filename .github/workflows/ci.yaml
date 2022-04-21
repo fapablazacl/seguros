@@ -1,35 +1,21 @@
 name: Integracion Continua
-on: [push]
+on: [push, pull_request]
 jobs:
-  build-api:
-    runs-on: ubuntu-latest
+  compile:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        java: [ 8 ]
+    name: Java ${{ matrix.java }} compile
     steps:
-      - name: Listar Versiones
-        run: |
-          npm -v
-          node -v
-          docker -v
-      - name: Descarga del Repositorio
-        uses: actions/checkout@v3
-      - name: Instalacion Dependencias
-        run: |
-          cd api-cotizaciones
-          npm install
-      - name: Aplicar Linting
-        run: |
-          cd api-cotizaciones
-          npm run lint
-      - name: Ejecutar Pruebas Unitarias
-        run: |
-          cd api-cotizaciones
-          npm run test
-      - name: Generar Transpilacion
-        run: |
-          cd api-cotizaciones
-          npm run build
-  build-proxy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Listar Versiones
-        run: |
-          docker -v
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-package: jdk
+          java-version: ${{ matrix.java }}
+      - name: Generar Compilacion
+        run: gradle build
+        
