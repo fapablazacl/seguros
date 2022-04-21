@@ -17,5 +17,5 @@ jobs:
           java-package: jdk
           java-version: ${{ matrix.java }}
       - name: Generar Compilacion
+        working-directory: api-cotizaciones-spring
         run: gradle build
-        
