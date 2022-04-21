@@ -1,0 +1,353 @@
+{
+	"info": {
+		"_postman_id": "e1e91e2f-6a95-4e90-88b9-bb83316f1580",
+		"name": "api-cotizaciones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API - Generar Cotizacion",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "iHzlrXDh9MnZ0yq2EyBBB6EH8pJKt7gS",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"rut\": \"11.111.111-1\",\n    \"fechaNacimiento\": \"1997-01-06\",\n    \"correo\": \"prsueba@gmail.com\",\n    \"telefono\": \"912312312\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/cotizacion",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"cotizacion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API - Generar Token OAUTH2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"client_id\": \"456\",\n    \"client_secret\": \"789\",\n    \"grant_type\": \"client_credentials\",\n    \"scope\": \"cotizaciones\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/cotizacion/oauth2/token?apiKey=123",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"cotizacion",
+						"oauth2",
+						"token"
+					],
+					"query": [
+						{
+							"key": "apiKey",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Listar Servicio \"Cotizaciones\"",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8001/services/cotizaciones/routes",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"cotizaciones",
+						"routes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Crear Consumidor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"falabella\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/consumers",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"consumers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Crear Llave Consumidor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"key\": \"123\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/consumers/falabella/key-auth",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"consumers",
+						"falabella",
+						"key-auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Generar Credenciales API",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Cliente de API del Cotizador de Seguros\",\n    \"client_id\": \"456\",\n    \"client_secret\": \"789\",\n    \"redirect_uris\": [\"https://www.falabella.cl/oauth_return\"]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/consumers/falabella/oauth2",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"consumers",
+						"falabella",
+						"oauth2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Habilitar Plugin OAUTH2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"oauth2\",\n    \"config\": {\n        \"scopes\": [ \"cotizaciones\" ],\n        \"mandatory_scope\": true,\n        \"enable_client_credentials\": true\n    },\n    \"protocols\": [\"https\"]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/services/cotizaciones/plugins",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"cotizaciones",
+						"plugins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Eliminar Plugin OAUTH2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8001/plugins/485b020a-8f75-4941-a817-4fa0bf792825",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"plugins",
+						"485b020a-8f75-4941-a817-4fa0bf792825"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Obtener Plugin OAUTH2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"oauth2\",\n    \"config\": {\n        \"scopes\": [ \"cotizaciones\" ],\n        \"mandatory_scope\": true,\n        \"enable_authorization_code\": true\n    },\n    \"protocols\": [\"https\"]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8001/services/cotizaciones/plugins",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"cotizaciones",
+						"plugins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Registrar Servicio",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"cotizaciones\",\n    \"url\": \"http://api-cotizaciones:3000/\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/services/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Registrar Route",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"hosts\": [\"localhost\"],\n    \"paths\": [\"/cotizacion\"], \n    \"strip_path\": false,\n    \"methods\": [\"POST\"]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8001/services/cotizaciones/routes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"cotizaciones",
+						"routes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "KONG - Eliminar Servicio/Ruta",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/services/cotizaciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"services",
+						"cotizaciones"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
