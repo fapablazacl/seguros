@@ -6,8 +6,8 @@ networks:
 
 services:
   api-cotizaciones:
-    container_name: api-cotizaciones
-    build: api-cotizaciones
+    container_name: api-cotizaciones-spring
+    build: api-cotizaciones-spring
     networks:
       - kong-net
   kong-database:

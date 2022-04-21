@@ -5,7 +5,7 @@ curl --location --request POST 'http://localhost:8001/services/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "cotizaciones",
-    "url": "http://api-cotizaciones:3000/"
+    "url": "http://api-cotizaciones:8080/"
 }
 '
 
@@ -14,7 +14,7 @@ curl --location --request POST 'http://localhost:8001/services/cotizaciones/rout
 --header 'Content-Type: application/json' \
 --data-raw '{
     "hosts": ["localhost"],
-    "paths": ["/cotizacion"], 
+    "paths": ["/fapablazaclx5/seguros/1.0.0/cotizacion"], 
     "strip_path": false,
     "methods": ["POST"]
 }
